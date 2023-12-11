@@ -13,4 +13,7 @@ Npm install dotenv
 
 Create .env file
 
+DATABASE_URL = "mongodb://localhost/TODO_DB"
+
 Create .gitignore file  [add “.env” and node_modules] 
+ 
