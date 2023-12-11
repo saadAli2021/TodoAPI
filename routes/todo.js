@@ -27,19 +27,37 @@ router.post('/',async (req,res)=>{
     }
 })
 /* --------------------------------------------------------------- */
-router.get('/:id',getTodoByID,(req,res)=>{
+router.get('/:id',getTodoByID, async(req,res)=>{
     res.json(res.todo);
 
 })
 /* --------------------------------------------------------------- */
-router.patch('/:id',(req,res)=>{
-    console.log("patch todo  ...");
+router.patch('/:id',getTodoByID, async(req,res)=>{
+    console.log(req.body);
+    const updateFields = { ...req.body };
+    try {
+        // Update the existing todo with the new fields
+        Object.assign(res.todo, updateFields);
 
+        // Save the updated todo
+        const updatedTodo = await res.todo.save();
+
+        res.json(updatedTodo);
+    } catch (error) {
+        res.status(500).json({ message: "Error while updating: " + error.message });
+    }
+    
 })
 /* --------------------------------------------------------------- */
-router.delete('/:id',(req,res)=>{
-    console.log("delete todo  ...");
+router.delete('/:id',getTodoByID,async (req,res)=>{
+    try {
+        await res.todo.deleteOne()
+        res.status(200).json({message: "deleted sucessfully",todo : res.todo})
 
+    } catch (error) {
+        res.status(500).json({message : "error while deleting"+error.message});
+    }
+   
 })
 /* --------------------------------------------------------------- */
 async function getTodoByID(req,res,next){
