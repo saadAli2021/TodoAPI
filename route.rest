@@ -1,13 +1,15 @@
+
 GET http://localhost:3000/todos
 ###
-GET http://localhost:3000/todos/67
+
+GET http://localhost:3000/todos/6575c1e3aa2f2ba9724b0964
+
 ###
-POST http://localhost:3000/todos
+POST http://localhost:3000/todos/
 content-type: application/json
 {
     "title" : "Buy Grocery",
     "description" : "buy grocery items at lulu hypermarket for kitchen.",
-    "status" : false,
-    
+    "status" : false
 }
 ###

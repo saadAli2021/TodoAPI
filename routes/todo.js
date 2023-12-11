@@ -27,8 +27,8 @@ router.post('/',async (req,res)=>{
     }
 })
 /* --------------------------------------------------------------- */
-router.get('/:id',(req,res)=>{
-    res.send("get todos  by ID  : "+req.params.id);
+router.get('/:id',getTodoByID,(req,res)=>{
+    res.json(res.todo);
 
 })
 /* --------------------------------------------------------------- */
@@ -36,6 +36,26 @@ router.patch('/:id',(req,res)=>{
     console.log("patch todo  ...");
 
 })
+/* --------------------------------------------------------------- */
+router.delete('/:id',(req,res)=>{
+    console.log("delete todo  ...");
+
+})
+/* --------------------------------------------------------------- */
+async function getTodoByID(req,res,next){
+let todo;
+    try {
+        todo = await model.findById(req.params.id);
+        if(todo == null){
+            return res.status(404).json({message : "todo not found."})
+        }
+
+    } catch (error) {
+        return res.status(500).json({message : "an error occured"})
+    }
+    res.todo = todo;
+   next();
+}
 /* --------------------------------------------------------------- */
 module.exports = router;
 /* --------------------------------------------------------------- */
